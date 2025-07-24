@@ -19,7 +19,6 @@ mysql = MySQL(app)
 def landing():
     return render_template('landing.html')
 
-<<<<<<< HEAD
 # dannii pushes
 @app.route('/home')
 def index():
@@ -43,7 +42,7 @@ def insert():
     cursor = mysql.connection.cursor()
 
     cursor.execute("SELECT * FROM drinks_inventory WHERE name_of_drink = %s", (name,))
-    existing_drink = cursor.fetchone()
+    existing = cursor.fetchone()
 
     if existing:
         flash(F"{name} already exists!","warning")

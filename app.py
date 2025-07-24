@@ -87,6 +87,7 @@ def edit(id):
     return render_template("update_drinks.html", drink=drink)
 
 #dannii pushes
+
 # Beverages inventory
     
 @app.route('/insert_beverage', methods=['POST'])
@@ -117,5 +118,8 @@ def insert_beverage():
         flash(f"{name} added successfully!", "success")
         return redirect(url_for('index'))
         
+
+#samuel pushes
+
 if __name__ == '__main__': 
     app.run(debug=True) 

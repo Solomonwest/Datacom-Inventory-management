@@ -87,6 +87,35 @@ def edit(id):
     return render_template("update_drinks.html", drink=drink)
 
 #dannii pushes
+# Beverages inventory
+    
+@app.route('/insert_beverage', methods=['POST'])
+def insert_beverage():
+     if request.method == 'POST':
+        name = request.form['name_of_item']
+        price = request.form['price']
+        quantity = request.form['quantity']
+        expiry_date = request.form["expiry_date"]
+        batch_number = request.form['batch_number']
+        subtype = request.form['subtype']
 
+        cursor = mysql.connection.cursor()
+
+        cursor.execute("SELECT * FROM beverages WHERE name_of_item = %s",
+                       (name,))
+        existing = cursor.fetchone()
+
+        if existing:
+            flash(f"{name} already exists!", "warning")
+            cursor.close()
+            return redirect(url_for('index'))
+        
+        cursor.execute("INSERT INTO beverages (name_of_item, price, quantity, expiry_date, batch_number, subtype) VALUES (%s, %s, %s, %s, %s, %s)",
+                       (name, price,quantity, expiry_date, batch_number, subtype))
+        mysql.connection.commit()
+        cursor.close()
+        flash(f"{name} added successfully!", "success")
+        return redirect(url_for('index'))
+        
 if __name__ == '__main__': 
     app.run(debug=True) 

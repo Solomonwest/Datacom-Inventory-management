@@ -19,6 +19,7 @@ mysql = MySQL(app)
 def landing():
     return render_template('landing.html')
 
+<<<<<<< HEAD
 # dannii pushes
 @app.route('/home')
 def index():
@@ -29,6 +30,7 @@ def index():
 
     return render_template('index.html', drinks=data)
 
+#dannii pushes
 @app.route("/insert", methods=["POST"])
 def insert():
     name = request.form['name of drink']

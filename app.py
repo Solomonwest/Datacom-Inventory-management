@@ -58,6 +58,33 @@ def insert():
 
 #samuel pushes
 
+@app.route("/edit/<int:id>", methods=["GET", "POST"])
+def edit(id):
+    cursor = mysql.connection.cursor()
+
+    if request.method == "POST":
+        name = request.form['name_of_drink']
+        price = request.form['price']
+        quantity = request.form['quantity']
+        expiry_date = request.form['expiry_date']
+        batch_number = request.form['batch_number']
+        subtype = request.form['subtype']
+
+        cursor.execute("""
+            UPDATE drinks_inventory
+            SET name_of_drink = %s, price = %s, quantity = %s, expiry_date = %s, batch_number = %s, subtype = %s
+            WHERE ID = %s
+        """, (name, price, quantity, expiry_date, batch_number, subtype, id))
+
+        mysql.connection.commit()
+        cursor.close()
+        flash(f"{name} updated successfully!", "success")
+        return redirect(url_for('index'))
+
+    cursor.execute("SELECT * FROM drinks_inventory WHERE ID = %s", (id,))
+    drink = cursor.fetchone()
+    cursor.close()
+    return render_template("update_drinks.html", drink=drink)
 
 if __name__ == '__main__': 
     app.run(debug=True) 

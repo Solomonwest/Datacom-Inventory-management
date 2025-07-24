@@ -56,5 +56,8 @@ def insert():
     cursor.close()
     return redirect(url_for('index'))
 
+#samuel pushes
+
+
 if __name__ == '__main__': 
     app.run(debug=True) 

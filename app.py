@@ -94,7 +94,15 @@ def edit(id):
     cursor.close()
     return render_template("update_drinks.html", drink=drink)
 
-#dannii pushes
+# mary let's push
+@app.route("/delete/<int:id>", methods=["GET"])
+def delete(id):
+        cursor = mysql.connection.cursor()
+        cursor.execute("DELETE FROM drinks_inventory WHERE ID = %s", (id,))
+        mysql.connection.commit()
+        cursor.close()
+        flash("Drink deleted successfully!", "success")
+        return redirect(url_for('index'))
 
 # Beverages inventory
     
@@ -126,11 +134,10 @@ def insert_beverage():
         flash(f"{name} added successfully!", "success")
         return redirect(url_for('index'))
         
-# mary let's push
-@app.route("/delete/<int:id>", methods=["GET"])
-def delete(id):
+@app.route("/delete_beverages/<int:id>", methods=["GET"])
+def delete_beverages(id):
         cursor = mysql.connection.cursor()
-        cursor.execute("DELETE FROM drinks_inventory WHERE ID = %s", (id,))
+        cursor.execute("DELETE FROM beverages WHERE ID = %s", (id,))
         mysql.connection.commit()
         cursor.close()
         flash("Drink deleted successfully!", "success")

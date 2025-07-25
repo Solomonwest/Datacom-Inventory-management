@@ -25,9 +25,13 @@ def index():
     cursor = mysql.connection.cursor()
     cursor.execute("SELECT * FROM drinks_inventory")
     data = cursor.fetchall()
+    cursor.execute("SELECT * FROM beverages")
+    item = cursor.fetchall()
+    cursor.execute("SELECT * FROM utensills_inventory")
+    uten = cursor.fetchall()
     cursor.close()
 
-    return render_template('index.html', drinks=data)
+    return render_template('index.html', drinks=data, beverages=item, utensills=uten)
 
 #dannii pushes
 @app.route("/insert", methods=["POST"])

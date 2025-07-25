@@ -118,6 +118,8 @@ def insert_beverage():
         flash(f"{name} added successfully!", "success")
         return redirect(url_for('index'))
         
+# mary let's push
+
 
 #samuel pushes
 

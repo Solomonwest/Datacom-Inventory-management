@@ -153,5 +153,54 @@ def edit_beverages(id):
     cursor.close()
     return render_template("update_beverages.html", beverage=item)
 
+
+    # Utensils management
+@app.route('/insert_utensills', methods=['POST'])
+def insert_utensills():
+     if request.method == 'POST':
+        name = request.form['name_of_item']
+        price = request.form['price']
+        quantity = request.form['quantity']
+        expiry_date = request.form['expiry_date']
+        batch_number = request.form['batch_number']
+        subtype = request.form['subtype']
+
+        cursor = mysql.connection.cursor()
+
+        cursor.execute(""" INSERT into utensills_inventory(name_of_item, price, quantity, expiry_date, batch_number, subtype)
+                        VALUES (%s, %s, %s, %s, %s, %s)""",
+                       (name, price, quantity, expiry_date, batch_number, subtype))
+        mysql.connection.commit()
+        cursor.close()
+        return redirect(url_for('index'))
+     
+
+@app.route('/edit_utensills/<int:id>', methods= ['GET', 'POST'])
+def edit_utensills(id):
+    cursor = mysql.connection.cursor()
+
+    if request.method == 'POST':
+        name = request.form['name_of_item']
+        price = request.form['price']
+        quantity = request.form['quantity']
+        expiry_date = request.form['expiry_date']
+        batch_number = request.form['batch_number']
+        subtype = request.form['subtype']
+
+        cursor.execute(""" UPDATE utensills_inventory
+                       SET name_of_item = %s, price = %s, quantity =%s, expiry_date = %s, batch_number = %s, subtype = %s
+                        WHERE ID = %s
+                    """, (name, price, quantity, expiry_date, batch_number, subtype, id))
+        mysql.connection.commit()
+        cursor.close()
+        flash(f"{name} updated successfully!", "success")
+        return redirect(url_for('index'))
+     
+    cursor.execute("SELECT * FROM utensills_inventory WHERE ID = %s", (id,))
+    item = cursor.fetchone()
+    cursor.close()
+    return render_template("update_utensills.html", utensill=item)
+
+
 if __name__ == '__main__': 
     app.run(debug=True) 

@@ -127,7 +127,14 @@ def insert_beverage():
         return redirect(url_for('index'))
         
 # mary let's push
-
+@app.route("/delete/<int:id>", methods=["GET"])
+def delete(id):
+        cursor = mysql.connection.cursor()
+        cursor.execute("DELETE FROM drinks_inventory WHERE ID = %s", (id,))
+        mysql.connection.commit()
+        cursor.close()
+        flash("Drink deleted successfully!", "success")
+        return redirect(url_for('index'))
 
 #samuel pushes
 

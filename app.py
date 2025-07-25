@@ -19,6 +19,10 @@ mysql = MySQL(app)
 def landing():
     return render_template('landing.html')
 
+@app.route('/sell')
+def sell():
+    return render_template('sell.html',)
+
 # dannii pushes
 @app.route('/home')
 def index():

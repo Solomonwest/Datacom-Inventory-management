@@ -220,6 +220,14 @@ def edit_utensills(id):
     return render_template("update_utensills.html", utensill=item)
 
 #mary let's push
+@app.route("/delete_utensills/<int:id>", methods=["GET"])
+def delete_utensills(id):
+        cursor = mysql.connection.cursor()
+        cursor.execute("DELETE FROM utensills_inventory WHERE ID = %s", (id,))
+        mysql.connection.commit()
+        cursor.close()
+        flash("Drink deleted successfully!", "success")
+        return redirect(url_for('index'))
 
 if __name__ == '__main__': 
     app.run(debug=True) 
